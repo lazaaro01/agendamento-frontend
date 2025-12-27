@@ -13,7 +13,7 @@
         <div class="glass-card p-4 hover-scale transition-all">
           <div class="flex justify-content-between align-items-start mb-3">
             <div class="service-icon bg-indigo-500-alpha border-radius-lg flex align-items-center justify-center">
-              <i class="pi pi-tag text-2xl text-primary"></i>
+              <i class="pi pi-tag text-2xl text-primary ml-2"></i>
             </div>
             <div class="text-right">
               <span class="text-xs text-muted block mb-1">Preço</span>

@@ -15,7 +15,7 @@ import Button from 'primevue/button'
 const props = defineProps({
   variant: {
     type: String,
-    default: 'primary' // primary, secondary, danger, ghost
+    default: 'primary'
   },
   loading: {
     type: Boolean,

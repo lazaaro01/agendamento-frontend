@@ -1,6 +1,5 @@
 <template>
   <div :class="{ 'my-app-dark': true }">
-    <!-- Unauthenticated Layout (Login/Register) -->
     <template v-if="isAuthPage">
       <router-view v-slot="{ Component }">
         <transition name="page" mode="out-in">
@@ -9,7 +8,6 @@
       </router-view>
     </template>
 
-    <!-- Authenticated Layout -->
     <template v-else>
       <div class="layout-wrapper flex p-3 gap-4 min-h-screen">
         <AppSidebar />
@@ -44,7 +42,7 @@ const isAuthPage = computed(() => {
 </script>
 
 <style>
-/* Global layout styles */
+  
 .layout-wrapper {
   max-width: 1600px;
   margin: 0 auto;

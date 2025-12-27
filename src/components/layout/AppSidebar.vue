@@ -49,7 +49,6 @@ const menuItems = [
 ]
 
 function logout() {
-  // Logic to logout
   router.push('/login')
 }
 </script>

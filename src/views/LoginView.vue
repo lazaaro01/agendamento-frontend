@@ -3,7 +3,7 @@
     <div class="login-card p-4 sm:p-6 glass-card" style="width: 100%; max-width: 450px;">
       <div class="text-center mb-5">
         <div class="bg-primary-reverse border-circle w-4rem h-4rem flex align-items-center justify-center mx-auto mb-3 shadow-lg">
-          <i class="pi pi-lock text-3xl text-primary"></i>
+          <i class="pi pi-lock text-3xl text-primary ml-3"></i>
         </div>
         <h2 class="title-gradient text-3xl mb-2">Seja bem-vindo</h2>
         <p class="text-muted">Faça login para gerenciar seus agendamentos</p>
@@ -27,8 +27,6 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import LoginForm from '../components/auth/LoginForm.vue'
-// import { useAuthStore } from '../stores/auth.store' // Assuming it will be there
-
 const router = useRouter()
 const loading = ref(false)
 
@@ -36,7 +34,6 @@ async function handleLogin(credentials) {
   try {
     loading.value = true
     console.log('Logging in with:', credentials)
-    // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500))
     router.push('/dashboard')
   } catch (error) {

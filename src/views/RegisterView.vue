@@ -3,7 +3,7 @@
     <div class="register-card p-4 sm:p-6 glass-card" style="width: 100%; max-width: 450px;">
       <div class="text-center mb-5">
         <div class="bg-primary-reverse border-circle w-4rem h-4rem flex align-items-center justify-center mx-auto mb-3 shadow-lg">
-          <i class="pi pi-user-plus text-3xl text-primary"></i>
+          <i class="pi pi-user-plus text-3xl text-primary ml-3"></i>
         </div>
         <h2 class="title-gradient text-3xl mb-2">Crie sua conta</h2>
         <p class="text-muted">Comece a organizar seus atendimentos hoje mesmo</p>

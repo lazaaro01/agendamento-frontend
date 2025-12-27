@@ -14,7 +14,6 @@
         </div>
       </div>
 
-      <!-- Main Content Area -->
       <div class="col-12 lg:col-8 mt-4">
         <div class="glass-card p-4 h-full">
           <div class="flex align-items-center justify-content-between mb-4">
@@ -39,7 +38,6 @@
         </div>
       </div>
 
-      <!-- Quick Actions -->
       <div class="col-12 lg:col-4 mt-4">
         <div class="glass-card p-4">
           <h3 class="m-0 title-gradient mb-4">Ações Rápidas</h3>

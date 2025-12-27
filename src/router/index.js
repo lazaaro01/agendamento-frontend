@@ -5,9 +5,6 @@ import DashboardView from '../views/DashboardView.vue'
 import AppointmentsView from '../views/AppointmentsView.vue'
 import ServicesView from '../views/ServicesView.vue'
 
-
-
-// Placeholder for Services if needed, or I can just use a simple view for now
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/login', component: LoginView },
