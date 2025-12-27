@@ -1,0 +1,56 @@
+<template>
+  <div :class="{ 'my-app-dark': true }">
+    <!-- Unauthenticated Layout (Login/Register) -->
+    <template v-if="isAuthPage">
+      <router-view v-slot="{ Component }">
+        <transition name="page" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
+    </template>
+
+    <!-- Authenticated Layout -->
+    <template v-else>
+      <div class="layout-wrapper flex p-3 gap-4 min-h-screen">
+        <AppSidebar />
+        
+        <main class="flex-1 flex flex-column">
+          <AppHeader />
+          
+          <div class="content-area flex-1">
+            <router-view v-slot="{ Component }">
+              <transition name="page" mode="out-in">
+                <component :is="Component" />
+              </transition>
+            </router-view>
+          </div>
+        </main>
+      </div>
+    </template>
+  </div>
+</template>
+
+<script setup>
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import AppSidebar from './components/layout/AppSidebar.vue'
+import AppHeader from './components/layout/AppHeader.vue'
+
+const route = useRoute()
+
+const isAuthPage = computed(() => {
+  return ['/login', '/register', '/'].includes(route.path)
+})
+</script>
+
+<style>
+/* Global layout styles */
+.layout-wrapper {
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.content-area {
+  padding-bottom: 2rem;
+}
+</style>
