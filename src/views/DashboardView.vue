@@ -22,17 +22,21 @@
           </div>
           
           <div class="flex flex-column gap-3">
-            <div v-for="i in 3" :key="i" class="appointment-item p-3 border-radius-lg flex align-items-center gap-3">
+            <div v-for="appointment in appointments" :key="appointment.id" class="appointment-item p-3 border-radius-lg flex align-items-center gap-3">
               <Avatar icon="pi pi-user" shape="circle" size="large" />
               <div class="flex-1">
-                <p class="m-0 font-bold">Cliente {{ i }}</p>
-                <p class="m-0 text-xs text-muted">Corte de Cabelo + Barba</p>
+                <p class="m-0 font-bold">{{ appointment.user?.name || 'Cliente' }}</p>
+                <p class="m-0 text-xs text-muted">{{ appointment.service?.name || 'Serviço' }}</p>
               </div>
               <div class="text-right">
-                <p class="m-0 font-semibold">14:00</p>
-                <p class="m-0 text-xs text-muted">Hoje</p>
+                <p class="m-0 font-semibold">{{ new Date(appointment.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}</p>
+                <p class="m-0 text-xs text-muted">{{ new Date(appointment.date).toLocaleDateString() }}</p>
               </div>
               <Badge value="Confirmado" severity="success" />
+            </div>
+            
+            <div v-if="appointments.length === 0" class="text-center p-4 text-muted">
+              Nenhum agendamento para hoje.
             </div>
           </div>
         </div>
@@ -53,16 +57,31 @@
 </template>
 
 <script setup>
+import { onMounted, computed } from 'vue'
+import { useServiceStore } from '../stores/service.store'
+import { useAppointmentStore } from '../stores/appointment.store'
 import Avatar from 'primevue/avatar'
 import Button from 'primevue/button'
 import Badge from 'primevue/badge'
 
-const stats = [
-  { label: 'Hoje', value: '12', icon: 'pi pi-calendar', colorClass: 'bg-primary-alpha' },
-  { label: 'Serviços', value: '8', icon: 'pi pi-briefcase', colorClass: 'bg-indigo-500-alpha' },
-  { label: 'Ganhos', value: 'R$ 450', icon: 'pi pi-money-bill', colorClass: 'bg-green-500-alpha' },
-  { label: 'Clientes', value: '124', icon: 'pi pi-users', colorClass: 'bg-purple-500-alpha' },
-]
+const serviceStore = useServiceStore()
+const appointmentStore = useAppointmentStore()
+
+const appointments = computed(() => appointmentStore.appointments.slice(0, 3))
+
+const stats = computed(() => [
+  { label: 'Hoje', value: appointmentStore.appointments.length, icon: 'pi pi-calendar', colorClass: 'bg-primary-alpha' },
+  { label: 'Serviços', value: serviceStore.services.length, icon: 'pi pi-briefcase', colorClass: 'bg-indigo-500-alpha' },
+  { label: 'Ganhos', value: 'R$ 0', icon: 'pi pi-money-bill', colorClass: 'bg-green-500-alpha' },
+  { label: 'Clientes', value: '0', icon: 'pi pi-users', colorClass: 'bg-purple-500-alpha' },
+])
+
+onMounted(async () => {
+  await Promise.all([
+    serviceStore.fetchServices(),
+    appointmentStore.fetchAppointments()
+  ])
+})
 </script>
 
 <style scoped>

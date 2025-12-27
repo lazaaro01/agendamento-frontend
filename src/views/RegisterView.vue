@@ -57,10 +57,12 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth.store'
 import BaseInput from '../components/ui/BaseInput.vue'
 import BaseButton from '../components/ui/BaseButton.vue'
 
 const router = useRouter()
+const authStore = useAuthStore()
 const name = ref('')
 const email = ref('')
 const password = ref('')
@@ -69,11 +71,14 @@ const loading = ref(false)
 async function handleRegister() {
   try {
     loading.value = true
-    console.log('Registering:', { name: name.value, email: email.value })
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    await authStore.register({
+      name: name.value,
+      email: email.value,
+      password: password.value
+    })
     router.push('/login')
   } catch (error) {
-    console.error(error)
+    console.error('Registration error:', error)
   } finally {
     loading.value = false
   }

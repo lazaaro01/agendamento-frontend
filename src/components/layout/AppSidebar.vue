@@ -23,8 +23,8 @@
     <div class="user-footer p-2 mt-auto border-top-1 border-white-alpha-10 pt-4 flex align-items-center gap-3">
       <Avatar icon="pi pi-user" shape="circle" class="bg-primary text-white" />
       <div class="flex-1 min-w-0">
-        <p class="m-0 font-semibold text-sm truncate">Usuário Teste</p>
-        <p class="m-0 text-xs text-muted">user@example.com</p>
+        <p class="m-0 font-semibold text-sm truncate">{{ authStore.user?.name || 'Usuário' }}</p>
+        <p class="m-0 text-xs text-muted truncate">{{ authStore.user?.email || 'email@exemplo.com' }}</p>
       </div>
       <Button 
         icon="pi pi-sign-out" 
@@ -37,10 +37,12 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '../../stores/auth.store'
 import Avatar from 'primevue/avatar'
 import Button from 'primevue/button'
 
 const router = useRouter()
+const authStore = useAuthStore()
 
 const menuItems = [
   { label: 'Dashboard', to: '/dashboard', icon: 'pi pi-chart-bar' },
@@ -49,6 +51,7 @@ const menuItems = [
 ]
 
 function logout() {
+  authStore.logout()
   router.push('/login')
 }
 </script>

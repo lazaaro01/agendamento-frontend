@@ -23,22 +23,26 @@
           </div>
         </template>
         
-        <Column field="client" header="Cliente">
+        <Column header="Cliente">
           <template #body="slotProps">
             <div class="flex align-items-center gap-2">
               <Avatar icon="pi pi-user" size="small" shape="circle" class="bg-indigo-100 text-indigo-700" />
-              <span class="font-medium text-white">{{ slotProps.data.client }}</span>
+              <span class="font-medium text-white">{{ slotProps.data.user?.name || 'Cliente' }}</span>
             </div>
           </template>
         </Column>
         
-        <Column field="service" header="Serviço" />
+        <Column header="Serviço">
+          <template #body="slotProps">
+            {{ slotProps.data.service?.name || '-' }}
+          </template>
+        </Column>
         
-        <Column field="date" header="Data">
+        <Column header="Data">
           <template #body="slotProps">
             <div class="flex flex-column">
-              <span class="font-semibold">{{ slotProps.data.date }}</span>
-              <span class="text-xs text-muted">{{ slotProps.data.time }}</span>
+              <span class="font-semibold">{{ new Date(slotProps.data.date).toLocaleDateString() }}</span>
+              <span class="text-xs text-muted">{{ new Date(slotProps.data.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}</span>
             </div>
           </template>
         </Column>
@@ -63,19 +67,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, computed } from 'vue'
+import { useAppointmentStore } from '../stores/appointment.store'
 import Button from 'primevue/button'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Tag from 'primevue/tag'
 import Avatar from 'primevue/avatar'
 
-const appointments = ref([
-  { client: 'João Silva', service: 'Corte de Cabelo', date: '20/01/2025', time: '14:00' },
-  { client: 'Maria Oliveira', service: 'Manicure', date: '21/01/2025', time: '10:30' },
-  { client: 'Pedro Santos', service: 'Barba', date: '21/01/2025', time: '16:00' },
-  { client: 'Ana Costa', service: 'Depilação', date: '22/01/2025', time: '11:00' },
-])
+const appointmentStore = useAppointmentStore()
+const appointments = computed(() => appointmentStore.appointments)
+const loading = computed(() => appointmentStore.loading)
+
+onMounted(() => {
+  appointmentStore.fetchAppointments()
+})
 </script>
 
 <style scoped>

@@ -26,18 +26,20 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth.store'
 import LoginForm from '../components/auth/LoginForm.vue'
+
 const router = useRouter()
+const authStore = useAuthStore()
 const loading = ref(false)
 
 async function handleLogin(credentials) {
   try {
     loading.value = true
-    console.log('Logging in with:', credentials)
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    await authStore.login(credentials)
     router.push('/dashboard')
   } catch (error) {
-    console.error(error)
+    console.error('Login error:', error)
   } finally {
     loading.value = false
   }

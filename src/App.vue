@@ -29,15 +29,21 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useAuthStore } from './stores/auth.store'
 import AppSidebar from './components/layout/AppSidebar.vue'
 import AppHeader from './components/layout/AppHeader.vue'
 
 const route = useRoute()
+const authStore = useAuthStore()
 
 const isAuthPage = computed(() => {
   return ['/login', '/register', '/'].includes(route.path)
+})
+
+onMounted(() => {
+  authStore.fetchProfile()
 })
 </script>
 

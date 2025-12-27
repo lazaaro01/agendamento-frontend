@@ -17,7 +17,9 @@
             </div>
             <div class="text-right">
               <span class="text-xs text-muted block mb-1">Preço</span>
-              <span class="text-xl font-bold text-white">{{ service.price }}</span>
+              <span class="text-xl font-bold text-white">
+                {{ typeof service.price === 'number' ? `R$ ${service.price.toFixed(2).replace('.', ',')}` : service.price }}
+              </span>
             </div>
           </div>
           
@@ -40,15 +42,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, computed } from 'vue'
+import { useServiceStore } from '../stores/service.store'
 import Button from 'primevue/button'
 
-const services = ref([
-  { name: 'Corte de Cabelo', price: 'R$ 50,00', duration: '40 min', description: 'Corte moderno com lavagem inclusa e finalização.' },
-  { name: 'Barba Completa', price: 'R$ 35,00', duration: '30 min', description: 'Modelagem de barba com toalha quente e óleos essenciais.' },
-  { name: 'Combo: Corte + Barba', price: 'R$ 75,00', duration: '1h 10min', description: 'O serviço completo para renovar o visual.' },
-  { name: 'Manicure', price: 'R$ 30,00', duration: '45 min', description: 'Cuidado completo das unhas com esmaltação premium.' },
-])
+const serviceStore = useServiceStore()
+const services = computed(() => serviceStore.services)
+const loading = computed(() => serviceStore.loading)
+
+onMounted(() => {
+  serviceStore.fetchServices()
+})
 </script>
 
 <style scoped>

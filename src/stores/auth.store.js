@@ -33,6 +33,16 @@ export const useAuthStore = defineStore('auth', {
       return response.data
     },
 
+    async fetchProfile() {
+      if (!this.token) return
+      try {
+        const response = await api.get('/auth/profile')
+        this.user = response.data
+      } catch (error) {
+        this.logout()
+      }
+    },
+
     logout() {
       this.user = null
       this.token = null
