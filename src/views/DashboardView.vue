@@ -46,8 +46,8 @@
         <div class="glass-card p-4">
           <h3 class="m-0 title-gradient mb-4">Ações Rápidas</h3>
           <div class="flex flex-column gap-2">
-            <Button label="Novo Agendamento" icon="pi pi-plus" class="w-full" />
-            <Button label="Adicionar Serviço" icon="pi pi-tag" class="w-full p-button-outlined" />
+            <Button label="Novo Agendamento" icon="pi pi-plus" class="w-full" @click="router.push('/appointments')" />
+            <Button label="Adicionar Serviço" icon="pi pi-tag" class="w-full p-button-outlined" @click="router.push('/services')" />
             <Button label="Configurações" icon="pi pi-cog" class="w-full p-button-text" />
           </div>
         </div>
@@ -58,6 +58,7 @@
 
 <script setup>
 import { onMounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { useServiceStore } from '../stores/service.store'
 import { useAppointmentStore } from '../stores/appointment.store'
 import Avatar from 'primevue/avatar'
@@ -66,6 +67,7 @@ import Badge from 'primevue/badge'
 
 const serviceStore = useServiceStore()
 const appointmentStore = useAppointmentStore()
+const router = useRouter()
 
 const appointments = computed(() => appointmentStore.appointments.slice(0, 3))
 

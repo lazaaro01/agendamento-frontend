@@ -1,5 +1,6 @@
 <template>
   <div :class="{ 'my-app-dark': true }">
+    <Toast />
     <template v-if="isAuthPage">
       <router-view v-slot="{ Component }">
         <transition name="page" mode="out-in">
@@ -34,6 +35,7 @@ import { useRoute } from 'vue-router'
 import { useAuthStore } from './stores/auth.store'
 import AppSidebar from './components/layout/AppSidebar.vue'
 import AppHeader from './components/layout/AppHeader.vue'
+import Toast from 'primevue/toast'
 
 const route = useRoute()
 const authStore = useAuthStore()
