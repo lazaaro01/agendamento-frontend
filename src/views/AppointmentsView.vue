@@ -64,7 +64,6 @@
       </DataTable>
     </div>
 
-    <!-- Novo Agendamento Dialog -->
     <Dialog v-model:visible="showDialog" modal header="Novo Agendamento" :style="{ width: '450px' }" class="p-fluid glass-dialog">
       <div class="field mb-4">
         <label for="service" class="block font-medium mb-2">Serviço</label>
@@ -73,9 +72,10 @@
           v-model="newAppointment.service_id" 
           :options="services" 
           optionLabel="name" 
-          optionValue="id" 
+          optionValue="ID" 
           placeholder="Selecione um serviço" 
           class="w-full"
+          appendTo="body"
         />
       </div>
       <div class="field mb-4">
@@ -87,6 +87,7 @@
           hourFormat="24" 
           placeholder="Selecione a data e hora"
           class="w-full"
+          appendTo="body"
         />
       </div>
       <template #footer>
@@ -129,15 +130,23 @@ const newAppointment = ref({
 })
 
 const openNewAppointment = async () => {
-  if (services.value.length === 0) {
+  try {
     await serviceStore.fetchServices()
+    console.log('Services loaded:', services.value)
+    showDialog.value = true
+  } catch (error) {
+    toast.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao carregar serviços', life: 3000 })
+    console.error('Failed to fetch services:', error)
   }
-  showDialog.value = true
 }
 
 const saveAppointment = async () => {
-  if (!newAppointment.value.service_id || !newAppointment.value.date) {
-    toast.add({ severity: 'warn', summary: 'Atenção', detail: 'Preencha todos os campos do agendamento', life: 3000 })
+  if (!newAppointment.value.service_id) {
+    toast.add({ severity: 'warn', summary: 'Atenção', detail: 'Selecione um serviço', life: 3000 })
+    return
+  }
+  if (!newAppointment.value.date) {
+    toast.add({ severity: 'warn', summary: 'Atenção', detail: 'Selecione uma data e hora', life: 3000 })
     return
   }
 
@@ -171,9 +180,14 @@ const cancelAppointment = async (id) => {
   }
 }
 
-onMounted(() => {
-  appointmentStore.fetchAppointments()
-  serviceStore.fetchServices()
+onMounted(async () => {
+  try {
+    await appointmentStore.fetchAppointments()
+    await serviceStore.fetchServices()
+  } catch (error) {
+    toast.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao carregar dados', life: 3000 })
+    console.error('Failed to load data:', error)
+  }
 })
 </script>
 

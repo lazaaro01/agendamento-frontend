@@ -8,9 +8,9 @@
     <div class="flex align-items-center gap-3">
       <span class="p-input-icon-left">
         <i class="pi pi-search text-muted" />
-        <InputText placeholder="Buscar..." class="p-inputtext-sm" />
+        <InputText placeholder="Buscar..." class="p-inputtext-sm ml-2" />
       </span>
-      <Button icon="pi pi-bell" class="p-button-rounded p-button-text p-button-secondary shadow-none" v-badge="2" />
+      <Button icon="pi pi-bell" class="p-button-rounded p-button-text p-button-secondary shadow-none"/>
     </div>
   </header>
 </template>

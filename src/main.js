@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import PrimeVue from 'primevue/config'
 import ToastService from 'primevue/toastservice'
+import BadgeDirective from 'primevue/badgedirective'
 import { createPinia } from 'pinia'
 import Aura from '@primevue/themes/aura'
 import 'primeflex/primeflex.css'
@@ -22,5 +23,7 @@ app.use(PrimeVue, {
     }
   }
 })
+
+app.directive('badge', BadgeDirective)
 
 app.mount('#app')

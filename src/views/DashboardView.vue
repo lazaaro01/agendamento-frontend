@@ -72,10 +72,10 @@ const router = useRouter()
 const appointments = computed(() => appointmentStore.appointments.slice(0, 3))
 
 const stats = computed(() => [
-  { label: 'Hoje', value: appointmentStore.appointments.length, icon: 'pi pi-calendar', colorClass: 'bg-primary-alpha' },
-  { label: 'Serviços', value: serviceStore.services.length, icon: 'pi pi-briefcase', colorClass: 'bg-indigo-500-alpha' },
-  { label: 'Ganhos', value: 'R$ 0', icon: 'pi pi-money-bill', colorClass: 'bg-green-500-alpha' },
-  { label: 'Clientes', value: '0', icon: 'pi pi-users', colorClass: 'bg-purple-500-alpha' },
+  { label: 'Hoje', value: appointmentStore.appointments.length, icon: 'pi pi-calendar ml-3', colorClass: 'bg-primary-alpha' },
+  { label: 'Serviços', value: serviceStore.services.length, icon: 'pi pi-briefcase ml-3', colorClass: 'bg-indigo-500-alpha' },
+  { label: 'Ganhos', value: 'R$ 0', icon: 'pi pi-money-bill ml-3', colorClass: 'bg-green-500-alpha' },
+  { label: 'Clientes', value: '0', icon: 'pi pi-users ml-3', colorClass: 'bg-purple-500-alpha' },
 ])
 
 onMounted(async () => {
